@@ -5,6 +5,7 @@ public class ParkingLot {
 	private static final int MAX_PARKING_SPACE = 10000;
 	Integer parkingSpace;
 	String parkingName;
+	Integer carNum = 0;
 	
 	public ParkingLot(String name, Integer parkingSpace) {	
 		checkParameter(name, parkingSpace);
@@ -36,4 +37,11 @@ public class ParkingLot {
 		return parkingSpace;
 	}
 
+	public Integer getHadParkingCars() {
+		return carNum;
+	}
+	
+	public void park() {
+		carNum++;
+	}
 }

@@ -21,8 +21,7 @@ public class Company {
 	}
 
 	public void employ(ParkingBoy parkingBoy) {
-		// TODO Auto-generated method stub
-		
+		parkingBoy.setParkingLots(parkingLots);
 	}
 
 }
