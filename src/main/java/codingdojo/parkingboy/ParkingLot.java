@@ -1,11 +1,14 @@
 package codingdojo.parkingboy;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParkingLot {
 	private static final int MIN_PARKING_SPACE = 0;
 	private static final int MAX_PARKING_SPACE = 10000;
 	Integer parkingSpace;
 	String parkingName;
-	Integer carNum = 0;
+	private Map<ParkingCard,Car> parkedCars = new HashMap<>();
 	
 	public ParkingLot(String name, Integer parkingSpace) {	
 		checkParameter(name, parkingSpace);
@@ -37,11 +40,20 @@ public class ParkingLot {
 		return parkingSpace;
 	}
 
-	public Integer getHadParkingCars() {
-		return carNum;
+	public Integer getParkingCarsNum() {
+		return parkedCars.size();
 	}
 	
-	public void park() {
-		carNum++;
+	public ParkingCard park(Car car) {
+		ParkingCard card = new ParkingCard();
+		parkedCars.put(card, car);
+		return card;
+	}
+
+	public Car pick(ParkingCard card) {
+		return parkedCars.remove(card);
+	}
+	public boolean isParkingLotFull() {
+		return parkedCars.size()==parkingSpace;
 	}
 }

@@ -1,29 +1,39 @@
 package codingdojo.parkingboy;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ParkingBoy {
 	
-	private Car car;
 	private List<ParkingLot> parkingLots;
 	
-	
 	public ParkingCard park(Car car) {
-		if(parkingLots.get(0).getHadParkingCars() == 2) {
-			
-		}
-		this.car = car;
-		parkingLots.get(0).park();
-		return new ParkingCard();
+		return getFirstParkingLotIsNotFull().park(car);
 	}
 
-	public Car pick(ParkingCard card1) {
-		return car;
+	private ParkingLot getFirstParkingLotIsNotFull() {
+		for (ParkingLot parkingLot : parkingLots) {
+			if(!parkingLot.isParkingLotFull()) {
+				return parkingLot;
+			}
+		}
+		return null;
+	}
+
+	public Car pick(ParkingCard card) {
+		Car car = null;
+		for(ParkingLot lot: parkingLots) {
+			car = lot.pick(card);
+			if(car != null) {
+				return car;
+			}
+		}
+		throw new ParkingCarIsNotFoundException();
 	}
 
 	void setParkingLots(List<ParkingLot> parkingLots) {
 		this.parkingLots = parkingLots;
 	}
-	
 	
 }
