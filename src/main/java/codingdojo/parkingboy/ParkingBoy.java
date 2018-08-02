@@ -1,14 +1,15 @@
 package codingdojo.parkingboy;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ParkingBoy {
 	
 	private List<ParkingLot> parkingLots;
 	
 	public ParkingCard park(Car car) {
+		if(hasThisCar(car)) {
+			throw new ParkingCarDuplicationException();
+		}
 		return getFirstParkingLotIsNotFull().park(car);
 	}
 
@@ -18,7 +19,7 @@ public class ParkingBoy {
 				return parkingLot;
 			}
 		}
-		return null;
+		throw new ParkingLotIsFull();
 	}
 
 	public Car pick(ParkingCard card) {
@@ -34,6 +35,15 @@ public class ParkingBoy {
 
 	void setParkingLots(List<ParkingLot> parkingLots) {
 		this.parkingLots = parkingLots;
+	}
+	
+	private boolean hasThisCar(Car car) {
+		for(ParkingLot parkingLot :parkingLots ) {
+			if(parkingLot.hasThisCar(car)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

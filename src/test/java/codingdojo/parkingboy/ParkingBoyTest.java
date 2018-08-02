@@ -68,9 +68,31 @@ public class ParkingBoyTest {
 		company.employ(parkingBoy);
 	}
 	
-	//should throw car duplicate exception when try to park the same car twice
+	@Test(expected=ParkingCarDuplicationException.class)
+	public void should_throw_car_duplicate_exception_when_try_to_park_the_same_car_twice_to_different_parking_lot() {
+		ParkingLot p1 = new ParkingLot("1", 1);
+		ParkingLot p2 = new ParkingLot("2", 2);
+		ParkingBoy parkingBoy = new ParkingBoy();
+		buildCompany(p1, p2, parkingBoy);
+		Car car = new Car("1");
+		Car car1 = new Car("1");
+		parkingBoy.park(car);
+		parkingBoy.park(car1);
+	}
 	
-	//should park to the first parking lot when the first has space, even the second has car.
+	
+	@Test(expected=ParkingCarDuplicationException.class)
+	public void should_throw_car_duplicate_exception_when_try_to_park_the_same_car_twice() {
+		ParkingLot p1 = new ParkingLot("1", 2);
+		ParkingLot p2 = new ParkingLot("2", 2);
+		ParkingBoy parkingBoy = new ParkingBoy();
+		buildCompany(p1, p2, parkingBoy);
+		Car car = new Car("1");
+		Car car1 = new Car("1");
+		parkingBoy.park(car);
+		parkingBoy.park(car1);
+	}
+	
 	@Test
 	public void should_park_to_the_first_parking_lot_when_the_first_has_space_even_the_second_has_car(){
 		ParkingLot p1 = new ParkingLot("1", 2);
@@ -90,7 +112,21 @@ public class ParkingBoyTest {
 		
 		assertTrue(p1.isParkingLotFull());
 	}
-	//should throw parking lot is full exception when trying to park but no space any more
+	
+	@Test(expected=ParkingLotIsFull.class)
+	public void should_throw_parking_lot_is_full_exception_when_trying_to_park_but_no_space_any_more() {
+		ParkingLot p1 = new ParkingLot("1", 1);
+		ParkingLot p2 = new ParkingLot("2", 1);
+		ParkingBoy parkingBoy = new ParkingBoy();
+		buildCompany(p1, p2, parkingBoy);
+		Car car = new Car("1");
+		Car car2 = new Car("2");
+		Car car3 = new Car("3");
+		parkingBoy.park(car);
+		parkingBoy.park(car2);
+		
+		parkingBoy.park(car3);
+	}
 	
 	@Test
 	public void should_pick_a_car_in_the_first_parking_lot_even_the_second_has_car(){
@@ -144,5 +180,5 @@ public class ParkingBoyTest {
 		Car carPicked = parkingBoy.pick(card3);
 		assertEquals(car3, carPicked);
 	}
-	//should throw car is not found exception when the parking card is not matched to any car
+	
 }

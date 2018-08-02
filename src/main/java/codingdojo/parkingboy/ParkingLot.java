@@ -50,10 +50,17 @@ public class ParkingLot {
 		return card;
 	}
 
+    boolean hasThisCar(Car car) {
+		return 	parkedCars.containsValue(car);
+	}
+
 	public Car pick(ParkingCard card) {
 		return parkedCars.remove(card);
 	}
 	public boolean isParkingLotFull() {
 		return parkedCars.size()==parkingSpace;
 	}
+	
+	
+	
 }
